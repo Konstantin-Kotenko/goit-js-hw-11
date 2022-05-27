@@ -80,24 +80,3 @@ img {
   font-size: 15px;
   font-weight: 900;
 }
-
-.load-more {
-  display: none;
-}
-
-.load-more.active {
-  display: block;
-  width: 200px;
-  height: 30px;
-  margin: 10px auto 10px;
-  color: white;
-  background-color: rgb(92, 92, 187);
-  border-radius: 2px;
-  border: none;
-  outline: none;
-}
-
-.load-more.active:hover {
-  background-color: rgb(80, 80, 187);
-  cursor: pointer;
-}
