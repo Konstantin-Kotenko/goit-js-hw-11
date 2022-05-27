@@ -7,7 +7,6 @@ import template from './template/template.hbs';
 
 const form = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
-// const loadMore = document.querySelector('.load-more');
 const div = document.querySelector('.div');
 
 let page = 1;
@@ -27,13 +26,11 @@ const fetchImagesGallery = async name => {
       `https://pixabay.com/api/?key=27599331-8560efaac28dff02d691a7952&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&${params}`,
     );
     if (response.data.hits == 0) {
-      // loadMore.classList.remove('active'),
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.',
       );
     } else if (page === 1 && response.data.hits.length !== 0) {
       Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
-      // loadMore.classList.add('active');
     }
     totalPages = response.data.totalHits / limit;
     return response.data.hits;
@@ -58,7 +55,6 @@ const onSearchImages = e => {
   name = e.currentTarget.elements[0].value;
   if (name === '') {
     Notiflix.Notify.info('Please enter name your search.');
-    // loadMore.classList.remove('active');
     resetGallery();
     return;
   }
@@ -66,15 +62,6 @@ const onSearchImages = e => {
 
   fetchImagesGallery(name).then(renderGallery);
 };
-
-// const onLoadMore = () => {
-//   page += 1;
-//   if (page >= totalPages) {
-//     loadMore.classList.remove('active');
-//     Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
-//   }
-//   fetchImagesGallery(name).then(renderGallery);
-// };
 
 const onEntry = entries => {
   entries.forEach(entry => {
@@ -94,5 +81,4 @@ const observer = new IntersectionObserver(onEntry, {
 });
 
 observer.observe(div);
-// loadMore.addEventListener('click', onLoadMore);
 form.addEventListener('submit', onSearchImages);
