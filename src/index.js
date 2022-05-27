@@ -1,13 +1,9 @@
 import './sass/main.scss';
 import axios from 'axios';
 import Notiflix from 'notiflix';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import template from './template/template.hbs';
-
-const form = document.querySelector('.search-form');
-const gallery = document.querySelector('.gallery');
-const div = document.querySelector('.div');
+import { refs } from './js/refs';
+import { renderGallery } from './js/renderGallery';
+import { resetGallery } from './js/resetGallery';
 
 let page = 1;
 let limit = 40;
@@ -39,17 +35,6 @@ const fetchImagesGallery = async name => {
   }
 };
 
-let lightbox = new SimpleLightbox('.gallery a', { captionsDelay: '250ms' });
-
-const renderGallery = hits => {
-  gallery.insertAdjacentHTML('beforeend', template(hits));
-  lightbox.refresh();
-};
-
-const resetGallery = () => {
-  gallery.innerHTML = '';
-};
-
 const onSearchImages = e => {
   e.preventDefault();
   name = e.currentTarget.elements[0].value;
@@ -69,7 +54,6 @@ const onEntry = entries => {
       page += 1;
       fetchImagesGallery(name).then(renderGallery);
       if (page > totalPages) {
-        loadMore.classList.remove('active');
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
       }
     }
@@ -80,5 +64,5 @@ const observer = new IntersectionObserver(onEntry, {
   rootMargin: '100px',
 });
 
-observer.observe(div);
-form.addEventListener('submit', onSearchImages);
+observer.observe(refs.div);
+refs.form.addEventListener('submit', onSearchImages);
