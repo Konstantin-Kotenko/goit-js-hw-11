@@ -9,21 +9,18 @@ const onSearchImages = e => {
   e.preventDefault();
   fetchImgParams.q = e.currentTarget.elements[0].value;
   fetchImgParams.page = 1;
-  if (fetchImgParams.q === '') {
-    Notiflix.Notify.info('Please enter name your search.');
-    resetGallery();
-    return;
-  }
   resetGallery();
-
+  if (fetchImgParams.q === '') {
+    return Notiflix.Notify.info('Please enter name your search.');
+  }
   searchImages(fetchImgParams).then(renderGallery);
 };
 
 const onEntry = entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting && fetchImgParams.q !== '') {
-      searchImages(fetchImgParams).then(renderGallery);
       fetchImgParams.page += 1;
+      searchImages(fetchImgParams).then(renderGallery);
     }
   });
 };
@@ -32,5 +29,5 @@ const observer = new IntersectionObserver(onEntry, {
   rootMargin: '100px',
 });
 
-observer.observe(refs.div);
 refs.form.addEventListener('submit', onSearchImages);
+observer.observe(refs.sentinel);

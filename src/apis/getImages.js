@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Notiflix from 'notiflix';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '27599331-8560efaac28dff02d691a7952';
@@ -17,17 +18,10 @@ const customAxios = axios.create({ baseURL: `${BASE_URL}?key=${API_KEY}` });
 export const searchImages = async params => {
   try {
     const { data } = await customAxios.get('', { params });
-    return data.hits;
+    return data;
   } catch {
-    console.log('error');
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.',
+    );
   }
 };
-
-//       if (data.data.hits == 0) {
-//         Notiflix.Notify.failure(
-//           'Sorry, there are no images matching your search query. Please try again.',
-//         );
-//       } else if (page === 1 && data.hits.length !== 0) {
-//         Notiflix.Notify.success(`Hooray! We found ${data.total} images.`);
-//       }
-//     });
