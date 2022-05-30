@@ -1,6 +1,6 @@
 import './sass/main.scss';
 import Notiflix from 'notiflix';
-import { observer } from './js/observ';
+import { observer } from './js/observer';
 import { refs } from './js/refs';
 import { renderGallery } from './js/renderGallery';
 import { resetGallery } from './js/resetGallery';
