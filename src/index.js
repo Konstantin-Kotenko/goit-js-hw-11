@@ -1,5 +1,6 @@
 import './sass/main.scss';
 import Notiflix from 'notiflix';
+import { observer } from './js/observ';
 import { refs } from './js/refs';
 import { renderGallery } from './js/renderGallery';
 import { resetGallery } from './js/resetGallery';
@@ -19,18 +20,5 @@ const onSearchImages = e => {
     observer.observe(refs.sentinel);
   });
 };
-
-const onEntry = entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && fetchImgParams.q !== '') {
-      fetchImgParams.page += 1;
-      searchImages(fetchImgParams).then(renderGallery);
-    }
-  });
-};
-
-const observer = new IntersectionObserver(onEntry, {
-  rootMargin: '100px',
-});
 
 refs.form.addEventListener('submit', onSearchImages);
