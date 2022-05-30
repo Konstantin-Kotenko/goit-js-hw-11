@@ -29,5 +29,5 @@ const observer = new IntersectionObserver(onEntry, {
   rootMargin: '100px',
 });
 
-refs.form.addEventListener('submit', onSearchImages);
 observer.observe(refs.sentinel);
+refs.form.addEventListener('submit', onSearchImages);
