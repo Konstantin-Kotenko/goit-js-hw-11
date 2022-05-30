@@ -6,6 +6,7 @@ import { resetGallery } from './js/resetGallery';
 import { fetchImgParams, searchImages } from './apis/getImages';
 
 const onSearchImages = e => {
+  observer.disconnect();
   e.preventDefault();
   fetchImgParams.q = e.currentTarget.elements[0].value;
   fetchImgParams.page = 1;
@@ -13,7 +14,10 @@ const onSearchImages = e => {
   if (fetchImgParams.q === '') {
     return Notiflix.Notify.info('Please enter name your search.');
   }
-  searchImages(fetchImgParams).then(renderGallery);
+  searchImages(fetchImgParams).then(data => {
+    renderGallery(data);
+    observer.observe(refs.sentinel);
+  });
 };
 
 const onEntry = entries => {
@@ -29,5 +33,4 @@ const observer = new IntersectionObserver(onEntry, {
   rootMargin: '100px',
 });
 
-observer.observe(refs.sentinel);
 refs.form.addEventListener('submit', onSearchImages);
